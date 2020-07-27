@@ -5,7 +5,7 @@
 + SQL
 + Normalization
 + Multiplicity
-+ DML = data manipulation language
++ DML = data manipulation language (read/write data = )
 + DDL = data defintion language
 + ACID = atomic, consistent, isolated, durable (with transaction)
 
