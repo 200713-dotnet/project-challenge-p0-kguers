@@ -4,11 +4,7 @@ namespace PizzaStore.Domain.Models
 {
      public class Name 
      {
-         public string UName {get; set;}
+         public string PizzaName {get; set;}
 
-         public Name(string name)
-         {
-              UName = name;
-         }
      }
 }

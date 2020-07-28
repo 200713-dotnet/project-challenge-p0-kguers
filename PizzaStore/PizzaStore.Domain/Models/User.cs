@@ -6,7 +6,10 @@ namespace PizzaStore.Domain.Models
      public class User
      {
           public List<Order> Orders {get; set;}
-          public Name Name { get; set; }
+          public string Name { get; set; }
+
+          public string Username {get; set;}
+          public string Password {get; set;}
           
           // public User(string name, string username, string password)
           // {

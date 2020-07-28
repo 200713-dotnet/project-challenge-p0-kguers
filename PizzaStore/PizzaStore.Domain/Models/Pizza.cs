@@ -8,7 +8,7 @@ namespace PizzaStore.Domain.Models
           public List<Topping> Toppings { get; set; }
           public Crust Crust { get; set; }
           public Size Size { get; set; }
-          public string Name { get; set; }
+          public Name Name { get; set; }
 
           public decimal Price{ get; }
 
@@ -17,9 +17,19 @@ namespace PizzaStore.Domain.Models
           //      return total;
           // }
           
+
           public override string ToString() 
           {
                return $"{Name} \n {Crust.Name}\n{Size.Name}";
+          }
+
+          public Pizza(List<string> toppings)
+          {
+               Toppings = new List<Topping>();
+               foreach(var item in toppings)
+               {
+                    Toppings.Add(new Topping(){Name = item});
+               }
           }
      }
 }
