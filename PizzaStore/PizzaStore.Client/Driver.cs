@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
-using PizzaStore.Domain.Models;
+using domain = PizzaStore.Domain.Models;
+using storing = PizzaStore.Storing;
 using PizzaStore.Storing.Repositories;
 
 namespace PizzaStore.Client
 {
      public class Driver
      {
-          public void Main()
+          static void Main()
           {
                Welcome();
-               var pr = new PizzaRepository();
                // var pizza = new Pizza()
                // {
                //      Name = "Cheese Pizza",
@@ -20,26 +20,23 @@ namespace PizzaStore.Client
                // };
 
                //pr.Create(pizza);
-               Console.ReadLine();
-
-               // foreach (var item in pr.ReadAll())
-               // {
-               //      Console.WriteLine(item);
-               // }
+               //Console.ReadLine();
           }
 
-          public void Welcome()
+          static void Welcome()
           {
-
-
                System.Console.WriteLine("Welcome to the Pizza Shop");
                System.Console.WriteLine("Best Pizza in the 462");
-               //select either user or store story
-               Store store = StoreSelect();
+               //select either user or store story          
                try
                {
                     //ask to create or login
-                    Menu(store.CreateOrder(), new User(){Orders = store.Orders}, store); //set orders equiv for this run of program
+                    var pr = new PizzaRepo(); 
+                    domain.Store store = StoreSelect();
+                    domain.User user = new domain.User(){Orders = store.Orders};
+                    domain.Order order = store.CreateOrder();
+                    pr.CreateOrder(order);
+                    Menu(order, user, store, pr); //set orders equiv for this run of program
                }
                catch (Exception ex)
                {
@@ -47,8 +44,9 @@ namespace PizzaStore.Client
                }
           }
 
-          public void Menu(Order cart, User u, Store s)
+          static void Menu(domain.Order cart, domain.User u, domain.Store s, PizzaRepo pr)
           {
+                             
                var order = true;
                do
                {
@@ -61,23 +59,24 @@ namespace PizzaStore.Client
                     switch (select)
                     {
                          case 1:
-                              cart.CreatePizza("Cheesy Pizza","L", "NY Style", new List<string> { "Cheese, Sauce" });
+                              pr.CreatePizza(cart.CreatePizza("Cheesy Pizza","L", "NY Style", new List<string> { "Cheese, Sauce" }));
                               System.Console.WriteLine("Added Cheese Pizza");
                               break;
                          case 2:
-                              cart.CreatePizza("Pepperoni Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pepperoni" });
+                              pr.CreatePizza(cart.CreatePizza("Pepperoni Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pepperoni" }));
                               System.Console.WriteLine("Added Pepperoni Pizza");
                               break;
                          case 3:
-                              cart.CreatePizza("Hawaiian Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pineapple, Ham" });
+                              pr.CreatePizza(cart.CreatePizza("Hawaiian Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pineapple, Ham" }));
                               System.Console.WriteLine("Added Hawaiian Pizza");
                               break;
                          case 4:
-                              cart.CreatePizza("Meat Lovers Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pepperoni, Sausage, Bacon" });
+                              pr.CreatePizza(cart.CreatePizza("Meat Lovers Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pepperoni, Sausage, Bacon" }));                    
                               System.Console.WriteLine("Added Meat Lovers Pizza");
                               break;
                          case 5:
-                              cart.CustomPizza();
+                              domain.Pizza custom = cart.CustomPizza();
+                              pr.CreatePizza(custom);
                               System.Console.WriteLine("Added Custom Pizza");
                               break;
                          case 6:
@@ -93,15 +92,13 @@ namespace PizzaStore.Client
                               order = false;
                               break;
                     }
-
                } while (order);
           }
-          public void StoreManager()
+          static void StoreManager()
           {
                //for store story
           }
-
-          static void DisplayCart(Order cart)
+          static void DisplayCart(domain.Order cart, PizzaRepo pr)
           {
                int cnt = 1;
                foreach (var pizza in cart.Pizzas)
@@ -109,9 +106,13 @@ namespace PizzaStore.Client
                     //System.Console.WriteLine("Pizza " + cnt + ": " + pizza.ToString());
                     cnt += 1;
                }
-          }
 
-          public void UserSearch(User user)
+               // foreach (var item in pr.ReadAll())
+               // {
+               //      Console.WriteLine(item);
+               // }
+          }
+          static void UserSearch(domain.User user)
           {
 
                System.Console.WriteLine("Enter Name");
@@ -127,8 +128,7 @@ namespace PizzaStore.Client
                user.Password = pword;
                
           }
-
-          public Store StoreSelect()
+          static domain.Store StoreSelect()
           {
                int choice;
                do
@@ -139,11 +139,13 @@ namespace PizzaStore.Client
 
                     if (choice == 1)
                     {
-                         return new Store(){Name = "West End Pizzeria"}; //West
+                         return new domain.Store(){Name = "West End Pizzeria"}; //West
+                         
                     }
                     else if (choice == 2)
                     {
-                         return new Store(){Name = "East Side Pizza Shop"}; //East      
+                         return new domain.Store(){Name = "East Side Pizza Shop"}; //East      
+
                     }
                     else
                     {

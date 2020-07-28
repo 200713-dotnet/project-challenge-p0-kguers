@@ -8,19 +8,22 @@ namespace PizzaStore.Domain.Models
           public List<Pizza> Pizzas { get; set; }
           public DateTime DateOrdered { get; set; }
 
-          public void CreatePizza(string name, string size, string crust, List<string> toppings)
+          public Pizza CreatePizza(string name, string size, string crust, List<string> toppings)
           {
-               Pizzas.Add(new Pizza(toppings) //toppings set in constructor
+               Pizza p = new Pizza(toppings)
                {
                     Name = new Name(){PizzaName = name},
                     Size = new Size(){Name = size},
                     Crust = new Crust(){Name = crust}
-               });      
+               };
+               Pizzas.Add(p); //toppings set in constructor
+               
+               return p;
           }
-          public void CustomPizza()
+          public Pizza CustomPizza()
           {
-               var chooseSize = true;
-               var chooseCrust = true;
+               var chooseSize = false;
+               var chooseCrust = false;
                var chooseTops = -1;
                string size = " ";
                string crust = " "; 
@@ -39,19 +42,19 @@ namespace PizzaStore.Domain.Models
                      {
                          case 1:
                               size = "S";
-                              chooseSize = false;
+                              chooseSize = true;
                               break;
                          case 2:
                               size = "M";
-                              chooseSize = false;
+                              chooseSize = true;
                               break;
                          case 3:
                               size = "L";
-                              chooseSize = false;
+                              chooseSize = true;
                               break;
                          case 4:
                               size = "PARTY";
-                              chooseSize = false;
+                              chooseSize = true;
                               break;
                      }
                }while(!chooseSize);
@@ -69,15 +72,15 @@ namespace PizzaStore.Domain.Models
                      {
                          case 1:
                               crust = "NY";
-                              chooseCrust = false;
+                              chooseCrust = true;
                               break;
                          case 2:
                               crust = "SQ";
-                              chooseCrust = false;
+                              chooseCrust = true;
                               break;
                          case 3:
                               crust = "CHI";
-                              chooseCrust = false;
+                              chooseCrust = true;
                               break;
                      }
                }while(!chooseCrust);
@@ -127,8 +130,13 @@ namespace PizzaStore.Domain.Models
                               chooseTops = 0;
                               break;
                      }
-               }while(chooseTops != 0);
-               CreatePizza("Customized Pizza", size, crust, toppings);
+               }while(chooseTops != 0); //and topping less than 2 or more than 5
+               return new Pizza(toppings)
+               {
+                    Name = new Name{PizzaName = "Customized Pizza"},
+                    Size = new Size{Name = size},
+                    Crust = new Crust{Name = crust},
+               };
           }
 
           public Order()

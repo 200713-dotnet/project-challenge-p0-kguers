@@ -10,7 +10,7 @@ namespace PizzaStore.Domain.Models
           public Size Size { get; set; }
           public Name Name { get; set; }
 
-          public decimal Price{ get; }
+          //public decimal Price{ get; }
 
           // public decimal CalculatePrice()
           // {
@@ -20,7 +20,7 @@ namespace PizzaStore.Domain.Models
 
           public override string ToString() 
           {
-               return $"{Name} \n {Crust.Name}\n{Size.Name}";
+               return $"{Name.PizzaName} \n {Crust.Name}\n{Size.Name}";
           }
 
           public Pizza(List<string> toppings)
@@ -30,6 +30,11 @@ namespace PizzaStore.Domain.Models
                {
                     Toppings.Add(new Topping(){Name = item});
                }
+          }
+
+          public Pizza()
+          {
+
           }
      }
 }

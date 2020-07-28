@@ -40,8 +40,6 @@ namespace PizzaStore.Storing
             {
                 entity.ToTable("Crust", "Pizza");
 
-                entity.Property(e => e.CrustId).ValueGeneratedNever();
-
                 entity.Property(e => e.Active)
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
@@ -56,23 +54,21 @@ namespace PizzaStore.Storing
             modelBuilder.Entity<Orders>(entity =>
             {
                 entity.HasKey(e => e.OrderId)
-                    .HasName("PK__Orders__C3905BCF8FF4F1E8");
+                    .HasName("PK__Orders__C3905BCFC4608D45");
 
                 entity.ToTable("Orders", "PizzaOrder");
 
-                entity.Property(e => e.OrderId).ValueGeneratedNever();
+                entity.Property(e => e.OrderDate).HasColumnType("datetime2(0)");
             });
 
             modelBuilder.Entity<OrdersPizzaTopping>(entity =>
             {
                 entity.HasKey(e => e.Optid)
-                    .HasName("PK__OrdersPi__C20D828DD197D9A9");
+                    .HasName("PK__OrdersPi__C20D828D1858302C");
 
                 entity.ToTable("OrdersPizzaTopping", "PizzaOrder");
 
-                entity.Property(e => e.Optid)
-                    .HasColumnName("OPTId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Optid).HasColumnName("OPTId");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrdersPizzaTopping)
@@ -88,8 +84,6 @@ namespace PizzaStore.Storing
             modelBuilder.Entity<Pizza>(entity =>
             {
                 entity.ToTable("Pizza", "Pizza");
-
-                entity.Property(e => e.PizzaId).ValueGeneratedNever();
 
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
 
@@ -112,8 +106,6 @@ namespace PizzaStore.Storing
             {
                 entity.ToTable("PizzaTopping", "Pizza");
 
-                entity.Property(e => e.PizzaToppingId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.Pizza)
                     .WithMany(p => p.PizzaTopping)
                     .HasForeignKey(d => d.PizzaId)
@@ -131,8 +123,6 @@ namespace PizzaStore.Storing
             {
                 entity.ToTable("Size", "Pizza");
 
-                entity.Property(e => e.SizeId).ValueGeneratedNever();
-
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
 
                 entity.Property(e => e.Name)
@@ -143,8 +133,6 @@ namespace PizzaStore.Storing
             modelBuilder.Entity<Store>(entity =>
             {
                 entity.ToTable("Store", "Store");
-
-                entity.Property(e => e.StoreId).ValueGeneratedNever();
 
                 entity.Property(e => e.Optid).HasColumnName("OPTId");
 
@@ -167,8 +155,6 @@ namespace PizzaStore.Storing
             {
                 entity.ToTable("Topping", "Pizza");
 
-                entity.Property(e => e.ToppingId).ValueGeneratedNever();
-
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
 
                 entity.Property(e => e.Name)
@@ -179,11 +165,9 @@ namespace PizzaStore.Storing
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.HasKey(e => e.UserId)
-                    .HasName("PK__Users__1788CC4CFD45B75D");
+                    .HasName("PK__Users__1788CC4C508EAEE5");
 
                 entity.ToTable("Users", "PizzaUser");
-
-                entity.Property(e => e.UserId).ValueGeneratedNever();
 
                 entity.Property(e => e.Optid).HasColumnName("OPTId");
 
