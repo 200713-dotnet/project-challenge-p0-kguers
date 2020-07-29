@@ -32,10 +32,17 @@ namespace PizzaStore.Client
                {
                     //ask to create or login
                     var pr = new PizzaRepo(); 
+
                     domain.Store store = StoreSelect();
+                    pr.CreateStore(store);
+
                     domain.User user = new domain.User(){Orders = store.Orders};
+                    UserSearch(user);
+                    pr.CreateUser(user);
+
                     domain.Order order = store.CreateOrder();
                     pr.CreateOrder(order);
+
                     Menu(order, user, store, pr); //set orders equiv for this run of program
                }
                catch (Exception ex)
@@ -59,35 +66,33 @@ namespace PizzaStore.Client
                     switch (select)
                     {
                          case 1:
-                              pr.CreatePizza(cart.CreatePizza("Cheesy Pizza","L", "NY Style", new List<string> { "Cheese, Sauce" }));
+                              pr.CreatePizza(cart.CreatePizza("Cheesy Pizza","L", "NY Style", new List<string> { "Cheese, Sauce" }),cart, s, u);
                               System.Console.WriteLine("Added Cheese Pizza");
                               break;
                          case 2:
-                              pr.CreatePizza(cart.CreatePizza("Pepperoni Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pepperoni" }));
+                              pr.CreatePizza(cart.CreatePizza("Pepperoni Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pepperoni" }), cart, s, u);
                               System.Console.WriteLine("Added Pepperoni Pizza");
                               break;
                          case 3:
-                              pr.CreatePizza(cart.CreatePizza("Hawaiian Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pineapple, Ham" }));
+                              pr.CreatePizza(cart.CreatePizza("Hawaiian Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pineapple, Ham" }), cart, s, u);
                               System.Console.WriteLine("Added Hawaiian Pizza");
                               break;
                          case 4:
-                              pr.CreatePizza(cart.CreatePizza("Meat Lovers Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pepperoni, Sausage, Bacon" }));                    
+                              pr.CreatePizza(cart.CreatePizza("Meat Lovers Pizza","L", "NY Style", new List<string> { "Cheese, Sauce, Pepperoni, Sausage, Bacon" }), cart, s, u);                    
                               System.Console.WriteLine("Added Meat Lovers Pizza");
                               break;
                          case 5:
                               domain.Pizza custom = cart.CustomPizza();
-                              pr.CreatePizza(custom);
+                              pr.CreatePizza(custom, cart, s, u);
                               System.Console.WriteLine("Added Custom Pizza");
                               break;
                          case 6:
-                              //var fmw = new FileManager();
-                              //fmw.Write(cart);
+                              DisplayCart(cart);
                               break;
+                         //case 7:
+                              //EditCart()
+                             // break;
                          case 7:
-                              //var fmr = new FileManager();
-                              //DisplayCart(fmr.Read());
-                              break;
-                         case 8:
                               System.Console.WriteLine("Exit Order");
                               order = false;
                               break;
@@ -98,33 +103,28 @@ namespace PizzaStore.Client
           {
                //for store story
           }
-          static void DisplayCart(domain.Order cart, PizzaRepo pr)
+          static void DisplayCart(domain.Order cart)
           {
                int cnt = 1;
                foreach (var pizza in cart.Pizzas)
                {
-                    //System.Console.WriteLine("Pizza " + cnt + ": " + pizza.ToString());
+                    System.Console.WriteLine("Pizza " + cnt + ": " + pizza.ToString());
                     cnt += 1;
                }
-
-               // foreach (var item in pr.ReadAll())
-               // {
-               //      Console.WriteLine(item);
-               // }
           }
           static void UserSearch(domain.User user)
           {
 
                System.Console.WriteLine("Enter Name");
                string name = Console.ReadLine();
-               System.Console.WriteLine("Enter Username");
-               string uname = Console.ReadLine();
+               //System.Console.WriteLine("Enter Username");
+               //string uname = Console.ReadLine();
                //get uname from db and match
                System.Console.WriteLine("Enter Password");
                string pword = Console.ReadLine();
 
                user.Name = name;
-               user.Username = uname;
+               //user.Username = uname;
                user.Password = pword;
                
           }

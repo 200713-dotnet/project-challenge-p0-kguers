@@ -94,39 +94,40 @@
 -- create table PizzaOrder.Orders
 -- (
 --      OrderId int primary KEY identity(1,1),
+--      [Name] nvarchar(100) not null,
 --      OrderDate datetime2(0),
--- );
--- GO
-
-
--- create table PizzaOrder.OrdersPizzaTopping
--- (
---      OPTId int primary key identity(1,1),
---      OrderId int,
---      PizzaToppingId int,
---      constraint FK_PizzaToppingId foreign key (PizzaToppingId) references Pizza.PizzaTopping(PizzaToppingId),
---      constraint FK_OrderId foreign key (OrderId) references PizzaOrder.Orders(OrderId),
-
 -- );
 -- GO
 
 -- create table PizzaUser.Users
 -- (
 --      UserId int primary key identity(1,1),
---      UserName nvarchar(100) not null,
+--      [Name] nvarchar(100) not null,
 --      PWord nvarchar(100) not null,
---      OPTId int,
---      constraint FK_OPTId foreign key (OPTId) references PizzaOrder.OrdersPizzaTopping(OPTId),
 -- );
 -- GO
 
 -- create table Store.Store
 -- (
 --      StoreId int primary key identity(1,1),
---      StoreName nvarchar(100) not null,
+--      [Name] nvarchar(100) not null,
 --      PWord nvarchar(100) not null,
---      OPTId int,
---      constraint FK_OPTId foreign key (OPTId) references PizzaOrder.OrdersPizzaTopping(OPTId),
 -- );
 -- GO
+-- create table PizzaOrder.OrdersPizzaTopping
+-- (
+--      OPTId int primary key identity(1,1),
+--      OrderId int,
+--      UserId int,
+--      StoreId int,
+--      PizzaToppingId int,
+--      constraint FK_PizzaToppingId foreign key (PizzaToppingId) references Pizza.PizzaTopping(PizzaToppingId),
+--      constraint FK_OrderId foreign key (OrderId) references PizzaOrder.Orders(OrderId),
+--      constraint FK_UserId foreign key (UserId) references PizzaUser.Users(UserId),
+--      constraint FK_StoreId foreign key (StoreId) references Store.Store(StoreId),
+-- );
+-- GO
+
+
+
 

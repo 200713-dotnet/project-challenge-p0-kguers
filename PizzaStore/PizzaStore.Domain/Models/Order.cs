@@ -131,7 +131,9 @@ namespace PizzaStore.Domain.Models
                               break;
                      }
                }while(chooseTops != 0); //and topping less than 2 or more than 5
-               return new Pizza(toppings)
+
+               CreatePizza("Customized Pizza", size, crust, toppings); //put into Pizzas
+               return new Pizza(toppings) //send to driver to put in db
                {
                     Name = new Name{PizzaName = "Customized Pizza"},
                     Size = new Size{Name = size},

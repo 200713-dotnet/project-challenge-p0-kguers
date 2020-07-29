@@ -19,11 +19,11 @@ namespace PizzaStore.Domain.Models
                System.Console.WriteLine("Select 1 for Cheese Pizza");
                System.Console.WriteLine("Select 2 for Pepperoni Pizza");
                System.Console.WriteLine("Select 3 for Hawaiian Pizza");
-               System.Console.WriteLine("Select 4 for Meat Lovers");
-               System.Console.WriteLine("Select 5 to Customize Pizza");
-               System.Console.WriteLine("Select 6 to Save Cart");
-               System.Console.WriteLine("Select 7 to Display Cart");
-               System.Console.WriteLine("Select 8 to Finish Order");
+               System.Console.WriteLine("Select 4 for Meat Lovers Pizza");
+               System.Console.WriteLine("Select 5 for Customized Pizza");
+               System.Console.WriteLine("Select 6 to View Cart");
+               //System.Console.WriteLine("Select 7 to Edit Cart");
+               System.Console.WriteLine("Select 7 to Checkout");
           }
      }
      

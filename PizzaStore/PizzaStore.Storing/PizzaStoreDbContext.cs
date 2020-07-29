@@ -54,7 +54,7 @@ namespace PizzaStore.Storing
             modelBuilder.Entity<Orders>(entity =>
             {
                 entity.HasKey(e => e.OrderId)
-                    .HasName("PK__Orders__C3905BCFC4608D45");
+                    .HasName("PK__Orders__C3905BCFAA42576D");
 
                 entity.ToTable("Orders", "PizzaOrder");
 
@@ -64,7 +64,7 @@ namespace PizzaStore.Storing
             modelBuilder.Entity<OrdersPizzaTopping>(entity =>
             {
                 entity.HasKey(e => e.Optid)
-                    .HasName("PK__OrdersPi__C20D828D1858302C");
+                    .HasName("PK__OrdersPi__C20D828D9F2A1D42");
 
                 entity.ToTable("OrdersPizzaTopping", "PizzaOrder");
 
@@ -79,6 +79,16 @@ namespace PizzaStore.Storing
                     .WithMany(p => p.OrdersPizzaTopping)
                     .HasForeignKey(d => d.PizzaToppingId)
                     .HasConstraintName("FK_PizzaToppingId");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.OrdersPizzaTopping)
+                    .HasForeignKey(d => d.StoreId)
+                    .HasConstraintName("FK_StoreId");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.OrdersPizzaTopping)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_UserId");
             });
 
             modelBuilder.Entity<Pizza>(entity =>
@@ -134,21 +144,9 @@ namespace PizzaStore.Storing
             {
                 entity.ToTable("Store", "Store");
 
-                entity.Property(e => e.Optid).HasColumnName("OPTId");
-
-                entity.Property(e => e.Pword)
-                    .IsRequired()
-                    .HasColumnName("PWord")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.StoreName)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(100);
-
-                entity.HasOne(d => d.Opt)
-                    .WithMany(p => p.Store)
-                    .HasForeignKey(d => d.Optid)
-                    .HasConstraintName("FK_OPTId");
             });
 
             modelBuilder.Entity<Topping>(entity =>
@@ -165,25 +163,18 @@ namespace PizzaStore.Storing
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.HasKey(e => e.UserId)
-                    .HasName("PK__Users__1788CC4C508EAEE5");
+                    .HasName("PK__Users__1788CC4C6995F0CF");
 
                 entity.ToTable("Users", "PizzaUser");
 
-                entity.Property(e => e.Optid).HasColumnName("OPTId");
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.Pword)
                     .IsRequired()
                     .HasColumnName("PWord")
                     .HasMaxLength(100);
-
-                entity.Property(e => e.UserName)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.HasOne(d => d.Opt)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.Optid)
-                    .HasConstraintName("FK_OPTId");
             });
 
             OnModelCreatingPartial(modelBuilder);

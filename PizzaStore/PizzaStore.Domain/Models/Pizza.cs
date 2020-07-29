@@ -20,7 +20,7 @@ namespace PizzaStore.Domain.Models
 
           public override string ToString() 
           {
-               return $"{Name.PizzaName} \n {Crust.Name}\n{Size.Name}";
+               return $"{Name.PizzaName}\n{Crust.Name}\n{Size.Name}\n";
           }
 
           public Pizza(List<string> toppings)
